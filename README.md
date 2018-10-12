@@ -58,6 +58,20 @@ Now you can use a link in your templates to open up the viewer:
 <%= link_to "display using the full viewer", pdfjs.full_path(file: "/sample.pdf") %>
 <%= link_to "display using the minimal viewer", pdfjs.minimal_path(file: "/sample.pdf") %>
 ```
+To use the mountable engine with custom integrations, the controller can be reopened, e.g., adding a security check:
+
+*app/controllers/pdfjs_viewer/viewer_controller.rb*
+```ruby
+module PdfjsViewer
+  class ViewerController < ApplicationController
+    # Reopen the PdfJs controller to enforce authorization, audit logging, etc.
+    before_action {
+      authorize! :read, UploadedFile
+    }
+  end
+end
+```
+
 
 ### Using the helper
 
